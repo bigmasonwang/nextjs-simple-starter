@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -11,16 +12,15 @@ export default function Home() {
             Build Your SaaS Product Faster
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            The complete starter kit with authentication, payments, and database ready to go. 
-            Focus on your product, not the infrastructure.
+            The complete starter kit with authentication, payments, and database
+            ready to go. Focus on your product, not the infrastructure.
           </p>
           <div className="flex gap-4 justify-center">
-            <Button size="lg" className="text-lg px-8">
-              Get Started
-            </Button>
-            <Button variant="outline" size="lg" className="text-lg px-8">
-              View Demo
-            </Button>
+            <Link href="/signup">
+              <Button variant="default" size="lg" className="text-lg px-8">
+                Get Started
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -34,7 +34,7 @@ export default function Home() {
               Built with modern tools and best practices
             </p>
           </div>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <Card>
               <CardHeader>
@@ -44,7 +44,8 @@ export default function Home() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Secure authentication with multiple providers, session management, and user profiles.
+                  Secure authentication with multiple providers, session
+                  management, and user profiles.
                 </p>
               </CardContent>
             </Card>
@@ -57,7 +58,8 @@ export default function Home() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Stripe integration with subscriptions, one-time payments, and webhook handling.
+                  Stripe integration with subscriptions, one-time payments, and
+                  webhook handling.
                 </p>
               </CardContent>
             </Card>
@@ -70,7 +72,8 @@ export default function Home() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Prisma ORM with PostgreSQL, migrations, and type-safe database operations.
+                  Prisma ORM with PostgreSQL, migrations, and type-safe database
+                  operations.
                 </p>
               </CardContent>
             </Card>
@@ -83,7 +86,8 @@ export default function Home() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Beautiful shadcn/ui components with dark mode and customizable themes.
+                  Beautiful shadcn/ui components with dark mode and customizable
+                  themes.
                 </p>
               </CardContent>
             </Card>
@@ -96,7 +100,8 @@ export default function Home() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Next.js 14 with App Router, server components, and optimized bundle size.
+                  Next.js 14 with App Router, server components, and optimized
+                  bundle size.
                 </p>
               </CardContent>
             </Card>
@@ -109,7 +114,8 @@ export default function Home() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  TypeScript, ESLint, Prettier, and comprehensive documentation included.
+                  TypeScript, ESLint, Prettier, and comprehensive documentation
+                  included.
                 </p>
               </CardContent>
             </Card>
@@ -120,9 +126,12 @@ export default function Home() {
       {/* CTA Section */}
       <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Launch Your SaaS?</h2>
+          <h2 className="text-3xl font-bold mb-4">
+            Ready to Launch Your SaaS?
+          </h2>
           <p className="text-lg text-muted-foreground mb-8">
-            Stop building the same features over and over. Start with a solid foundation.
+            Stop building the same features over and over. Start with a solid
+            foundation.
           </p>
           <Button size="lg" className="text-lg px-8">
             Start Building Today
