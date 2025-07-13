@@ -22,20 +22,10 @@ A Next.js application for tracking expenses with user authentication and Postgre
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/bigmasonwang/nextjs-simple-starter.git
-
-cd nextjs-simple-starter
+npx create-next-app@latest --example "https://github.com/bigmasonwang/nextjs-simple-starter" my-saas-app
 ```
 
-### 2. Install dependencies
-
-```bash
-npm install
-```
-
-This will automatically generate the Prisma client after installation.
-
-### 3. Set up the database
+### 2. Set up the database
 
 #### Option A: Local PostgreSQL
 
@@ -49,7 +39,7 @@ This will automatically generate the Prisma client after installation.
 
 Use a service like [Supabase](https://supabase.com), [Neon](https://neon.tech), or [Railway](https://railway.app) for a managed PostgreSQL instance.
 
-### 4. Configure environment variables
+### 3. Configure environment variables
 
 1. Copy the example environment file:
 
@@ -76,7 +66,7 @@ Use a service like [Supabase](https://supabase.com), [Neon](https://neon.tech), 
    openssl rand -base64 32
    ```
 
-### 5. Run database migrations
+### 4. Run database migrations
 
 ```bash
 npx prisma migrate deploy
@@ -84,7 +74,7 @@ npx prisma migrate deploy
 
 This will create the necessary tables in your database.
 
-### 6. Start the development server
+### 5. Start the development server
 
 ```bash
 npm run dev
