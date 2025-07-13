@@ -6,5 +6,5 @@ export default function DashboardLoading() {
         <p className="text-sm text-muted-foreground">Loading dashboard...</p>
       </div>
     </div>
-  );
+  )
 }

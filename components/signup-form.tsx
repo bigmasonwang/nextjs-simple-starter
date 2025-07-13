@@ -1,48 +1,48 @@
-"use client";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import Link from "next/link";
-import { useState } from "react";
-import { signUp } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+"use client"
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import Link from "next/link"
+import { useState } from "react"
+import { signUp } from "@/lib/auth-client"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
-      return;
+      toast.error("Passwords do not match")
+      return
     }
 
-    setLoading(true);
+    setLoading(true)
     const { data, error } = await signUp.email({
       email,
       password,
       name,
-    });
+    })
 
     if (error) {
-      toast.error(error.message);
+      toast.error(error.message)
     }
     if (data) {
-      router.push("/dashboard");
+      router.push("/dashboard")
     }
-    setLoading(false);
-  };
+    setLoading(false)
+  }
 
   return (
     <form
@@ -65,7 +65,7 @@ export function SignupForm({
             placeholder="John Doe"
             required
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={e => setName(e.target.value)}
           />
         </div>
         <div className="grid gap-3">
@@ -76,7 +76,7 @@ export function SignupForm({
             placeholder="m@example.com"
             required
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
           />
         </div>
         <div className="grid gap-3">
@@ -86,7 +86,7 @@ export function SignupForm({
             type="password"
             required
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={e => setPassword(e.target.value)}
           />
         </div>
         <div className="grid gap-3">
@@ -96,7 +96,7 @@ export function SignupForm({
             type="password"
             required
             value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            onChange={e => setConfirmPassword(e.target.value)}
           />
         </div>
         <Button type="submit" className="w-full" disabled={loading}>
@@ -124,5 +124,5 @@ export function SignupForm({
         </Link>
       </div>
     </form>
-  );
+  )
 }
