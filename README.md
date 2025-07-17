@@ -1,6 +1,6 @@
-# Spend Tracker
+# Next.js 15 + Better Auth + Prisma simple starter
 
-A Next.js application for tracking expenses with user authentication and PostgreSQL database.
+A Next.js application with user authentication and PostgreSQL database.
 
 ## Tech Stack
 
@@ -105,7 +105,7 @@ The application uses the following database models:
 ## Project Structure
 
 ```
-spend-tracker/
+my-saas-app/
 ├── app/                    # Next.js app directory
 │   ├── api/               # API routes
 │   ├── auth/              # Authentication pages
