@@ -12,6 +12,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run lint` - Run ESLint to check code quality
 - `npx prettier --write .` - Format code according to project style (no semicolons, double quotes)
 
+### Testing
+
+- `npm test` - Run tests with Vitest
+- `npm run test:watch` - Run tests in watch mode
+- `npm run test:ui` - Open Vitest UI for interactive testing
+
 ### Database
 
 - `npx prisma studio` - Open Prisma Studio GUI for database visualization
@@ -19,6 +25,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npx prisma migrate dev` - Create and apply database migrations in development
 - `npx prisma migrate deploy` - Apply migrations in production
 - `npx prisma db push` - Push schema changes without creating migrations (development only)
+
+### Component Management
+
+- `npx shadcn add <component>` - Add new shadcn/ui components
 
 ## Architecture Overview
 
@@ -32,6 +42,7 @@ This is a Next.js 15 application using the App Router pattern with the following
 - **Authentication**: Better Auth v1.2.12
 - **Styling**: Tailwind CSS v4 (using @tailwindcss/postcss)
 - **Components**: shadcn/ui with Radix UI primitives
+- **Testing**: Vitest with React Testing Library
 
 ### Project Structure
 
@@ -39,17 +50,25 @@ This is a Next.js 15 application using the App Router pattern with the following
   - `(auth)/` - Authentication pages (login, signup)
   - `api/auth/[...all]/` - Better Auth API handler
   - `dashboard/` - Protected routes requiring authentication
-- `components/` - React components, including shadcn/ui components in `ui/`
+  - `generated/prisma/` - Generated Prisma client (custom output location)
+  - `middleware.ts` - Route protection middleware (Note: in app directory, not root)
+- `components/` - React components
+  - `ui/` - shadcn/ui components
+  - `__tests__/` - Component tests
 - `lib/` - Core utilities and configurations
   - `auth.ts` - Better Auth server configuration
   - `auth-client.ts` - Better Auth client configuration
   - `prisma.ts` - Prisma client singleton instance
+  - `utils.ts` - Utility functions including `cn()` for className merging
 - `prisma/` - Database schema and migrations
+  - `schema.prisma` - Database models and configuration
+- `test/` - Test configuration
+  - `setup.ts` - Test environment setup
 
 ### Authentication Flow
 
 1. Better Auth handles all authentication via `/api/auth/[...all]` endpoint
-2. `middleware.ts` protects routes (currently `/dashboard`)
+2. `app/middleware.ts` protects routes (currently `/dashboard`)
 3. Authentication uses email/password with these database models:
    - User, Session, Account, Verification
 4. Client-side auth state managed by `authClient` from `lib/auth-client.ts`
@@ -58,9 +77,10 @@ This is a Next.js 15 application using the App Router pattern with the following
 
 - **Database Access**: Always use the Prisma singleton from `lib/prisma.ts`
 - **Auth Checks**: Use `auth()` from `lib/auth.ts` in server components
-- **Protected Routes**: Add paths to `protectedRoutes` in `middleware.ts`
+- **Protected Routes**: Add paths to `config.matcher` in `app/middleware.ts`
 - **Component Styling**: Use Tailwind CSS classes with `cn()` helper from `lib/utils.ts`
 - **UI Components**: Prefer shadcn/ui components from `components/ui/`
+- **Prisma Client Location**: Generated in `app/generated/prisma/` (not default location)
 
 ### Environment Variables
 
@@ -76,6 +96,17 @@ Required in `.env`:
 - No semicolons (enforced by Prettier)
 - Double quotes for strings
 - Use path aliases: `@/*` maps to project root
+- 2 spaces indentation
+- ES5 trailing commas
+- Arrow functions without parentheses for single parameters
+
+### Testing Approach
+
+- Tests use Vitest with jsdom environment
+- React Testing Library for component testing
+- Test files located in `components/__tests__/`
+- Global test setup in `test/setup.ts`
+- Path aliases work in tests via `vite-tsconfig-paths`
 
 ## Development Notes
 
@@ -83,3 +114,5 @@ Required in `.env`:
 - Database changes require generating and running migrations
 - Use Prisma directly in Server Components, avoid unnecessary Server Actions for data fetching
 - Using Prisma generated types, avoid creating duplicate types
+- Middleware is located at `app/middleware.ts` (not in root directory)
+- The middleware security note indicates auth checks should be done in each page/route for proper security
