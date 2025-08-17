@@ -119,11 +119,21 @@ For E2E tests (`.env.test`):
 
 ### Testing Approach
 
+#### Unit Testing (Vitest)
 - Tests use Vitest with jsdom environment
 - React Testing Library for component testing
 - Test files located in `components/__tests__/`
 - Global test setup in `test/setup.ts`
 - Path aliases work in tests via `vite-tsconfig-paths`
+- E2E directory excluded from Vitest configuration
+
+#### E2E Testing (Playwright)
+- Multi-browser testing (Chromium, Firefox, WebKit)
+- Test files located in `e2e/` directory
+- Tests authentication flows (signup, login, protected routes)
+- Uses separate test database for isolation
+- Global setup cleans database before tests
+- Runs against built application on port 3000
 
 ## Development Notes
 
