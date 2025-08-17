@@ -13,11 +13,9 @@
     "test:e2e": "./scripts/run-e2e-with-env.sh",
     "test:e2e:ui": "./scripts/run-e2e-with-env.sh --ui",
     "test:e2e:headed": "./scripts/run-e2e-with-env.sh --headed",
-    "test:e2e:setup": "./scripts/setup-test-db.sh",
-    "test:e2e:setup:docker": "./scripts/setup-test-db-docker.sh",
+    "test:e2e:setup": "./scripts/setup-test-db-docker.sh",
     "test:e2e:stop": "./scripts/stop-test-db.sh",
     "test:e2e:local": "./scripts/run-e2e-local.sh",
-    "test:db:create": "./scripts/create-test-db.sh",
     "postinstall": "prisma generate"
   },
   "dependencies": {
