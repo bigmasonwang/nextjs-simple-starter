@@ -3,13 +3,13 @@
 # Stop test database Docker container
 set -e
 
+# Source shared utilities
+source "$(dirname "$0")/utils.sh"
+
 echo "Stopping test database..."
 
-# Use docker compose (newer) or docker-compose (legacy)
-DOCKER_COMPOSE_CMD="docker compose"
-if ! docker compose version &> /dev/null 2>&1; then
-    DOCKER_COMPOSE_CMD="docker-compose"
-fi
+# Get Docker Compose command
+DOCKER_COMPOSE_CMD=$(get_docker_compose_cmd)
 
 # Stop the database
 $DOCKER_COMPOSE_CMD -f docker-compose.test.yml down

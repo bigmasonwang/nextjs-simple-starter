@@ -9,10 +9,9 @@ echo "Starting local e2e test run with Docker..."
 echo "Setting up test database..."
 ./scripts/setup-test-db-docker.sh
 
-# Load test environment variables (filter out comments and empty lines)
-if [ -f .env.test ]; then
-    export $(grep -v '^#' .env.test | grep -v '^$' | xargs)
-fi
+# Load test environment variables
+source "$(dirname "$0")/utils.sh"
+load_test_env
 
 echo "Running e2e tests..."
 # Run the tests

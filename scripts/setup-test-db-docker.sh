@@ -3,27 +3,14 @@
 # Setup test database using Docker for e2e tests
 set -e
 
+# Source shared utilities
+source "$(dirname "$0")/utils.sh"
+
 echo "Setting up test database with Docker..."
 
-# Check if Docker is installed
-if ! command -v docker &> /dev/null; then
-    echo "Error: Docker is not installed"
-    echo "Please install Docker first: https://docs.docker.com/get-docker/"
-    exit 1
-fi
-
-# Check if Docker Compose is available
-if ! command -v docker-compose &> /dev/null && ! docker compose version &> /dev/null 2>&1; then
-    echo "Error: Docker Compose is not available"
-    echo "Please install Docker Compose or use Docker Desktop"
-    exit 1
-fi
-
-# Use docker compose (newer) or docker-compose (legacy)
-DOCKER_COMPOSE_CMD="docker compose"
-if ! docker compose version &> /dev/null 2>&1; then
-    DOCKER_COMPOSE_CMD="docker-compose"
-fi
+# Check Docker and get compose command
+check_docker
+DOCKER_COMPOSE_CMD=$(get_docker_compose_cmd)
 
 echo "Starting PostgreSQL test database..."
 $DOCKER_COMPOSE_CMD -f docker-compose.test.yml up -d
@@ -50,12 +37,7 @@ if [ $counter -ge $timeout ]; then
 fi
 
 # Load test environment variables
-if [ -f .env.test ]; then
-    export $(grep -v '^#' .env.test | grep -v '^$' | xargs)
-else
-    echo "Warning: .env.test not found, using default values"
-    export DATABASE_URL="postgresql://test_user:test_password@localhost:5433/test_db"
-fi
+load_test_env
 
 # Run database migrations
 echo "Running database migrations..."
