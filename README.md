@@ -97,6 +97,9 @@ The application uses the following database models:
 - `npm run build` - Build the application for production
 - `npm run start` - Start the production server
 - `npm run lint` - Run ESLint
+- `npm run test` - Run unit tests with Vitest
+- `npm run test:e2e` - Run end-to-end tests with Playwright
+- `npm run test:e2e:ui` - Run e2e tests with Playwright UI
 - `npx prisma studio` - Open Prisma Studio to view/edit database
 - `npx prisma generate` - Generate Prisma client
 - `npx prisma migrate dev` - Create and apply migrations (development)
@@ -154,9 +157,41 @@ For other platforms, ensure you:
 - Ensure `BETTER_AUTH_SECRET` is set
 - Verify `BETTER_AUTH_URL` matches your application URL
 
+## Testing
+
+This project includes comprehensive testing setup:
+
+- **Unit Tests**: Vitest for component and utility testing
+- **E2E Tests**: Playwright for end-to-end authentication flow testing
+
+### Running Tests
+
+```bash
+# Unit tests
+npm run test
+
+# E2E tests (requires test database setup)
+npm run test:e2e:local
+
+# E2E tests with UI
+npm run test:e2e:ui
+```
+
+For detailed testing documentation, see [TESTING.md](./TESTING.md).
+
+### CI/CD
+
+E2E tests automatically run on GitHub Actions for:
+
+- Push to `main` or `develop` branches
+- Pull requests to `main` or `develop` branches
+
+The CI pipeline includes PostgreSQL service setup and comprehensive test reporting.
+
 ## Learn More
 
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Prisma Documentation](https://www.prisma.io/docs)
 - [Better Auth Documentation](https://better-auth.com)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [Playwright Documentation](https://playwright.dev/docs/intro)
