@@ -1,9 +1,8 @@
-import { FullConfig } from "@playwright/test"
 import { PrismaClient } from "@/app/generated/prisma"
 import * as dotenv from "dotenv"
 import * as path from "path"
 
-async function globalSetup(config: FullConfig) {
+async function globalSetup() {
   // Load test environment variables
   dotenv.config({ path: path.resolve(process.cwd(), ".env.test") })
 
