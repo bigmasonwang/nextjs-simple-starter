@@ -14,9 +14,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Testing
 
-- `npm test` - Run tests with Vitest
+#### Unit Tests (Vitest)
+- `npm test` - Run unit tests with Vitest (excludes e2e directory)
 - `npm run test:watch` - Run tests in watch mode
 - `npm run test:ui` - Open Vitest UI for interactive testing
+
+#### E2E Tests (Playwright)
+- `npm run test:e2e` - Run end-to-end tests in headless mode
+- `npm run test:e2e:ui` - Run tests with Playwright UI (interactive)
+- `npm run test:e2e:headed` - Run tests in headed mode (visible browser)
+- `npm run test:e2e:local` - Complete local test run with database setup
+- `npm run test:e2e:setup` - Setup test database (local PostgreSQL)
+- `npm run test:e2e:setup:docker` - Setup test database with Docker
+- `npm run test:e2e:stop` - Stop Docker test database
 
 ### Database
 
@@ -42,7 +52,7 @@ This is a Next.js 15 application using the App Router pattern with the following
 - **Authentication**: Better Auth v1.2.12
 - **Styling**: Tailwind CSS v4 (using @tailwindcss/postcss)
 - **Components**: shadcn/ui with Radix UI primitives
-- **Testing**: Vitest with React Testing Library
+- **Testing**: Vitest with React Testing Library (unit), Playwright (E2E)
 
 ### Project Structure
 
@@ -54,7 +64,7 @@ This is a Next.js 15 application using the App Router pattern with the following
   - `middleware.ts` - Route protection middleware (Note: in app directory, not root)
 - `components/` - React components
   - `ui/` - shadcn/ui components
-  - `__tests__/` - Component tests
+  - `__tests__/` - Component unit tests
 - `lib/` - Core utilities and configurations
   - `auth.ts` - Better Auth server configuration
   - `auth-client.ts` - Better Auth client configuration
@@ -63,7 +73,10 @@ This is a Next.js 15 application using the App Router pattern with the following
 - `prisma/` - Database schema and migrations
   - `schema.prisma` - Database models and configuration
 - `test/` - Test configuration
-  - `setup.ts` - Test environment setup
+  - `setup.ts` - Test environment setup for Vitest
+- `e2e/` - End-to-end tests using Playwright
+  - `auth.spec.ts` - Authentication flow tests
+  - `global-setup.ts` - Database cleanup before tests
 
 ### Authentication Flow
 
@@ -90,6 +103,10 @@ Required in `.env`:
 - `BETTER_AUTH_SECRET` - Generate with `openssl rand -base64 32`
 - `BETTER_AUTH_URL` - Application URL (default: http://localhost:3000)
 
+For E2E tests (`.env.test`):
+- Uses separate test database on port 5433
+- Test database auto-configured via Docker or local PostgreSQL
+
 ### Code Style
 
 - TypeScript strict mode is enabled
@@ -102,11 +119,21 @@ Required in `.env`:
 
 ### Testing Approach
 
+#### Unit Testing (Vitest)
 - Tests use Vitest with jsdom environment
 - React Testing Library for component testing
 - Test files located in `components/__tests__/`
 - Global test setup in `test/setup.ts`
 - Path aliases work in tests via `vite-tsconfig-paths`
+- E2E directory excluded from Vitest configuration
+
+#### E2E Testing (Playwright)
+- Multi-browser testing (Chromium, Firefox, WebKit)
+- Test files located in `e2e/` directory
+- Tests authentication flows (signup, login, protected routes)
+- Uses separate test database for isolation
+- Global setup cleans database before tests
+- Runs against built application on port 3000
 
 ## Development Notes
 
