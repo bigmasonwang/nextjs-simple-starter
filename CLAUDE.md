@@ -15,11 +15,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### Testing
 
 #### Unit Tests (Vitest)
+
 - `npm test` - Run unit tests with Vitest (excludes e2e directory)
 - `npm run test:watch` - Run tests in watch mode
 - `npm run test:ui` - Open Vitest UI for interactive testing
 
 #### E2E Tests (Playwright)
+
 - `npm run test:e2e` - Run end-to-end tests in headless mode
 - `npm run test:e2e:ui` - Run tests with Playwright UI (interactive)
 - `npm run test:e2e:headed` - Run tests in headed mode (visible browser)
@@ -104,6 +106,7 @@ Required in `.env`:
 - `BETTER_AUTH_URL` - Application URL (default: http://localhost:3000)
 
 For E2E tests (`.env.test`):
+
 - Uses separate test database on port 5433
 - Test database auto-configured via Docker or local PostgreSQL
 
@@ -120,6 +123,7 @@ For E2E tests (`.env.test`):
 ### Testing Approach
 
 #### Unit Testing (Vitest)
+
 - Tests use Vitest with jsdom environment
 - React Testing Library for component testing
 - Test files located in `components/__tests__/`
@@ -128,6 +132,7 @@ For E2E tests (`.env.test`):
 - E2E directory excluded from Vitest configuration
 
 #### E2E Testing (Playwright)
+
 - Multi-browser testing (Chromium, Firefox, WebKit)
 - Test files located in `e2e/` directory
 - Tests authentication flows (signup, login, protected routes)
