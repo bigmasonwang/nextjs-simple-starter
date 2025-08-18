@@ -141,4 +141,31 @@ test.describe("Authentication", () => {
     // Should redirect to login page
     await expect(page).toHaveURL("/login")
   })
+
+  test("should redirect authenticated users away from auth pages", async ({
+    page,
+  }) => {
+    const testUser = generateTestUser()
+
+    // First, sign up and login a user
+    await page.goto("/signup")
+    await page.fill("#name", testUser.name)
+    await page.fill("#email", testUser.email)
+    await page.fill("#password", testUser.password)
+    await page.fill("#confirmPassword", testUser.password)
+    await page.click('button[type="submit"]')
+
+    // Wait for redirect to dashboard
+    await expect(page).toHaveURL("/dashboard")
+
+    // Now try to access login page while authenticated
+    await page.goto("/login")
+    // Should redirect back to dashboard
+    await expect(page).toHaveURL("/dashboard")
+
+    // Try to access signup page while authenticated
+    await page.goto("/signup")
+    // Should redirect back to dashboard
+    await expect(page).toHaveURL("/dashboard")
+  })
 })
