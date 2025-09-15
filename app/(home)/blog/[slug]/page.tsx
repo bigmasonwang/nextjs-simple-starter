@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
-import { InlineTOC } from "fumadocs-ui/components/inline-toc"
+import { ArrowLeft } from "lucide-react"
 import defaultMdxComponents from "fumadocs-ui/mdx"
 import { blog } from "@/lib/source"
+import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export default async function Page(props: {
   params: Promise<{ slug: string }>
@@ -14,31 +16,58 @@ export default async function Page(props: {
   const Mdx = page.data.body
 
   return (
-    <>
-      <div className="container rounded-xl border py-12 md:px-8">
-        <h1 className="mb-2 text-3xl font-bold">{page.data.title}</h1>
-        <p className="mb-4 text-fd-muted-foreground">{page.data.description}</p>
-        <Link href="/blog">Back</Link>
+    <section className="py-32">
+      <div className="container">
+        <div className="mx-auto flex max-w-5xl flex-col items-center gap-4 text-center">
+          <Button variant="ghost" size="sm" asChild className="self-start mb-4">
+            <Link href="/blog" className="flex items-center gap-2">
+              <ArrowLeft className="h-4 w-4" />
+              Back to Blog
+            </Link>
+          </Button>
+
+          <h1 className="max-w-3xl text-pretty text-5xl font-semibold md:text-6xl">
+            {page.data.title}
+          </h1>
+
+          {page.data.description && (
+            <h3 className="text-muted-foreground max-w-3xl text-lg md:text-xl">
+              {page.data.description}
+            </h3>
+          )}
+
+          <div className="flex items-center gap-3 text-sm md:text-base">
+            <Avatar className="h-8 w-8 border">
+              <AvatarImage src="" />
+              <AvatarFallback>
+                {(page.data.author || "A").charAt(0)}
+              </AvatarFallback>
+            </Avatar>
+            <span>
+              <span className="font-semibold">
+                {page.data.author || "Anonymous"}
+              </span>
+              <span className="ml-1">
+                on{" "}
+                {page.data.date
+                  ? new Date(page.data.date).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })
+                  : "Date unknown"}
+              </span>
+            </span>
+          </div>
+        </div>
       </div>
-      <article className="container flex flex-col px-4 py-8">
-        <div className="prose min-w-0">
-          <InlineTOC items={page.data.toc} />
+
+      <div className="container">
+        <div className="prose dark:prose-invert mx-auto max-w-3xl">
           <Mdx components={defaultMdxComponents} />
         </div>
-        <div className="flex flex-col gap-4 text-sm">
-          <div>
-            <p className="mb-1 text-fd-muted-foreground">Written by</p>
-            <p className="font-medium">{page.data.author}</p>
-          </div>
-          <div>
-            <p className="mb-1 text-sm text-fd-muted-foreground">At</p>
-            <p className="font-medium">
-              {new Date(page.data.date).toDateString()}
-            </p>
-          </div>
-        </div>
-      </article>
-    </>
+      </div>
+    </section>
   )
 }
 
